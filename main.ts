@@ -1,48 +1,28 @@
-import { lexer, startLexer } from "./ai/lexer.ts";
-import Busch from "./ai/root.ts";
+import { startLexer } from "./src/root.ts";
+import Busch from "./src/busch.ts";
+import runTime from "./src/runtime.ts";
+
+
 const busch = new Busch()
 
 function main() {
-  const {b} = busch
-  console.log(`Welcome to Busch ${b.version}`)
-  console.log(`START: ${b.name}`)
-  console.log(`##Today's Date: ${b.date}`)
-  console.log("#####################")
-  const startName = prompt("Start The Day: ")
+  busch.init()
+  const startGoal = prompt("#[Busch] today's Goal: ")
  
-  if(startName !== "") {
-    const goal = startLexer(startName)
+  if(startGoal !== "") {
+    const goal = startLexer(startGoal)
     const started = busch.start(goal)
 
     while (started) {
-      const src = prompt("[busch]: ")
+      const src = prompt("#[Busch]: ")
 
-      if(src === "exit") {
+      if(src === "exit" || src === "close") {
         Deno.exit(1)
-      }else {
-       const ast = lexer(src)
-       switch (ast?.action) {
-        case "add":
-          busch.addTrade(ast)
-          break;
-        case "view":
-          busch.vue()
-          break;
-        case "cal":
-          if(ast?.copt === "trades") {
-            busch.totalTrades()
-          }else if(ast?.copt === "spreads") {
-            busch.totalSpreads()
-          } else if(ast?.copt === "all") {
-            busch.totalWin(ast?.avr)
-          }
-          break;
-       
-        default:
-          break;
-       }
-      }
+      } else {
+        runTime(busch, src)
     }
+  }
+
   }
 
   //start a day on open
