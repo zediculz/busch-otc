@@ -1,29 +1,22 @@
-import { startLexer } from "./src/root.ts";
-import Busch from "./src/busch.ts";
-import runTime from "./src/runtime.ts";
-
+import Busch from "./src/busch.ts"
+import runTime from "./src/runtime.ts"
 
 const busch = new Busch()
 
 function main() {
-  busch.init()
-  const startGoal = prompt("#[Busch] today's Goal: ")
- 
-  if(startGoal !== "") {
-    const goal = startLexer(startGoal)
-    const started = busch.start(goal)
+  
+const started = busch.init()
 
-    while (started) {
-      const src = prompt("#[Busch]: ")
+while (started) {
+    const src = prompt(`${busch.nick}: `)
 
-      if(src === "exit" || src === "close") {
-        Deno.exit(1)
-      } else {
-        runTime(busch, src)
-    }
+    if(src === "exit" || src === "close") {
+      Deno.exit(1)
+    } else {
+      runTime(busch, src)
   }
+}
 
-  }
 
   //start a day on open
   //receive a start prompt with goal with keyword  ==> start goal
@@ -44,4 +37,5 @@ function main() {
 
 }
 
+//MAIN
 main()

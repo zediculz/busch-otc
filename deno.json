@@ -1,6 +1,6 @@
 {
   "name": "Busch-Otc",
-  "version": "1.65",
+  "version": "2.11",
   "exports": "./main.ts",
   "tasks": {
     "dev": "deno run --watch main.ts",
